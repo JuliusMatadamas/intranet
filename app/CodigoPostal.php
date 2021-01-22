@@ -19,4 +19,9 @@ class CodigoPostal extends Model
     {
         return $this->belongsTo('App\Municipio');
     }
+
+    public function asentamientos()
+    {
+        return $this->hasMany('App\Asentamiento');
+    }
 }
