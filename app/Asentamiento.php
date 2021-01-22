@@ -24,4 +24,9 @@ class Asentamiento extends Model
     {
         return $this->hasMany('App\Empresa');
     }
+
+    public function clientes()
+    {
+        return $this->hasMany('App\Cliente');
+    }
 }

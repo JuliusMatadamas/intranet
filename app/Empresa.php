@@ -19,4 +19,9 @@ class Empresa extends Model
     {
         return $this->belongsTo('App\Asentamiento');
     }
+
+    public function clientes()
+    {
+        return $this->hasMany('App\Cliente');
+    }
 }
