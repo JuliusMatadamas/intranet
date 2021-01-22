@@ -19,4 +19,9 @@ class Asentamiento extends Model
     {
         return $this->belongsTo('App\CodigoPostal');
     }
+
+    public function empresas()
+    {
+        return $this->hasMany('App\Empresa');
+    }
 }
