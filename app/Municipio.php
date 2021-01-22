@@ -19,4 +19,9 @@ class Municipio extends Model
     {
         return $this->belongsTo('App\Estado');
     }
+
+    public function codigosPostales()
+    {
+        return $this->hasMany('App\CodigoPostal');
+    }
 }
