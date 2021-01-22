@@ -35,7 +35,6 @@ class CreateEstadosTable extends Migration
     {
         Schema::table('estados', function (Blueprint $table) {
             $table->dropForeign(['pais_id']);
-            $table->dropColumn('pais_id');
             $table->dropSoftDeletes();
         });
 

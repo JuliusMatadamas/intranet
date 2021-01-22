@@ -19,4 +19,9 @@ class Estado extends Model
     {
         return $this->belongsTo('App\Pais');
     }
+
+    public function municipios()
+    {
+        return $this->hasMany('App\Municipio');
+    }
 }
