@@ -14,4 +14,9 @@ class Pais extends Model
     protected $fillable = [
         'pais',
     ];
+
+    public function estados()
+    {
+        return $this->hasMany('App\Estado');
+    }
 }
