@@ -19,8 +19,8 @@ class CreateContratosTable extends Migration
             $table->unsignedBigInteger('plan_id');
             $table->unsignedBigInteger('puesto_id');
             $table->double('sueldo', 8, 2);
-            $table->date('alta');
-            $table->date('baja');
+            $table->date('alta')->nullable();
+            $table->date('baja')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

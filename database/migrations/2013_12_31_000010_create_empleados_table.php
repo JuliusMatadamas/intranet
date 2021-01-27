@@ -24,7 +24,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('curp', 20)->unique();
             $table->string('imss', 20)->unique();
             $table->unsignedBigInteger('asentamiento_id');
-            $table->string('domicilio', 20)->unique();
+            $table->string('domicilio', 100)->unique();
             $table->string('tel', 10)->nullable();
             $table->string('email', 100)->nullable();
             $table->softDeletes();
