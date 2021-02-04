@@ -19,7 +19,9 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('login-view', require('./Views/Login.vue').default);
+Vue.component('login-view', require('./views/Login.vue').default);
+Vue.component('email-component', require('./components/EmailComponent').default);
+Vue.component('password-component', require('./components/PasswordComponent').default);
 
 
 /**
