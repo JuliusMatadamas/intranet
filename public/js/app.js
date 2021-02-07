@@ -1982,6 +1982,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EmailComponent",
   data: function data() {
@@ -2020,6 +2021,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2128,32 +2130,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Login",
+  data: function data() {
+    return {
+      feedbackBtn: '&nbsp;',
+      inValidFeedBackBtn: false,
+      validFeedBackBtn: false
+    };
+  },
   props: {
-    feedbackBtn: {
-      type: String,
-      "default": '&nbsp;'
-    },
-    inValidFeedBackBtn: {
-      type: Boolean,
-      "default": false
-    },
     url: {
       type: String,
       "default": '/login'
-    },
-    validFeedBackBtn: {
-      type: Boolean,
-      "default": false
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    document.querySelector("input[name='_token']").value = document.querySelector("meta[name=csrf-token]").getAttribute("content");
+  },
   methods: {
     validForm: function validForm() {
-      console.log('Submit atrapado');
+      var _this = this;
+
+      var f = document.querySelector("form");
+      var b = Array.from(f.querySelectorAll('button'));
+      var inputs = Array.from(f.querySelectorAll('input'));
+      var url = f.getAttribute("action");
+      var valid = true;
+      inputs.forEach(function (i) {
+        if (i.value.length == 0) {
+          _this.feedbackBtn = "¡Favor de llenar todos los campos!";
+          _this.inValidFeedBackBtn = true;
+          _this.validFeedBackBtn = false;
+          valid = false;
+          return false;
+        } else {
+          if (i.classList.contains('is-invalid')) {
+            _this.feedbackBtn = "¡Favor de cumplir con lo indicado en el campo en rojo!";
+            _this.inValidFeedBackBtn = true;
+            _this.validFeedBackBtn = false;
+            valid = false;
+            return false;
+          }
+        }
+      });
+
+      if (valid) {
+        this.feedbackBtn = "Espera mientras se validan los datos";
+        this.inValidFeedBackBtn = false;
+        this.validFeedBackBtn = false;
+        b[0].disabled = true;
+        var data = new FormData(f);
+        axios.post(url, data).then(function (response) {
+          if (response.status == 200) {
+            _this.feedbackBtn = "Datos correctos, espera unos segundos para ser redireccionado.";
+            _this.inValidFeedBackBtn = false;
+            _this.validFeedBackBtn = true;
+            setTimeout(function () {
+              window.location = "inicio";
+            }, 2000);
+          } else {
+            console.log(response);
+          }
+        })["catch"](function (error) {
+          _this.feedbackBtn = "Los datos no fueron encontrados, favor de verificar.";
+          _this.inValidFeedBackBtn = true;
+          _this.validFeedBackBtn = false;
+          b[0].disabled = false;
+          console.log(error);
+        });
+      }
     }
-  }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -38526,6 +38577,7 @@ var render = function() {
       },
       attrs: {
         id: "email",
+        name: "email",
         placeholder: "Ingrese un correo electrónico válido",
         type: "email"
       },
@@ -38593,6 +38645,7 @@ var render = function() {
       },
       attrs: {
         id: "password",
+        name: "password",
         placeholder: "Ingrese su password",
         type: "password"
       },
@@ -38648,61 +38701,49 @@ var render = function() {
           _vm._v("Ingresa tus datos para iniciar sesión en la aplicación.")
         ]),
         _vm._v(" "),
-        _c(
-          "form",
-          {
-            attrs: { action: _vm.url },
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.validForm($event)
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "row" }, [
+        _c("form", { attrs: { action: _vm.url } }, [
+          _c("input", { attrs: { type: "hidden", name: "_token", value: "" } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [_c("email-component")], 1)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-12" },
+              [_c("password-component")],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
               _c(
-                "div",
-                { staticClass: "col-md-12" },
-                [_c("email-component")],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-md-12" },
-                [_c("password-component")],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-block btn-dark",
-                    class: {
-                      "is-invalid": _vm.inValidFeedBackBtn,
-                      "is-valid": _vm.validFeedBackBtn
-                    }
-                  },
-                  [_vm._v("Ingresar")]
-                ),
-                _vm._v(" "),
-                _c("div", {
+                "button",
+                {
+                  staticClass: "btn btn-block btn-dark",
                   class: {
-                    "invalid-feedback": _vm.inValidFeedBackBtn,
-                    "valid-feedback": _vm.validFeedBackBtn
+                    "is-invalid": _vm.inValidFeedBackBtn,
+                    "is-valid": _vm.validFeedBackBtn
                   },
-                  domProps: { innerHTML: _vm._s(_vm.feedbackBtn) }
-                })
-              ])
+                  attrs: { type: "button" },
+                  on: { click: _vm.validForm }
+                },
+                [_vm._v("Ingresar")]
+              ),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "small",
+                class: {
+                  "invalid-feedback": _vm.inValidFeedBackBtn,
+                  "valid-feedback": _vm.validFeedBackBtn
+                },
+                domProps: { innerHTML: _vm._s(_vm.feedbackBtn) }
+              })
             ])
-          ]
-        )
+          ])
+        ])
       ])
     ])
   ])

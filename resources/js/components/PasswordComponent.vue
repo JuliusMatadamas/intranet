@@ -8,6 +8,7 @@
                 'is-valid':isValid
             }"
             id="password"
+            name="password"
             placeholder="Ingrese su password"
             type="password"
             v-model="password"

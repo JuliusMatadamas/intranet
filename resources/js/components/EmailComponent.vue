@@ -8,6 +8,7 @@
                 'is-valid':isValid
             }"
             id="email"
+            name="email"
             placeholder="Ingrese un correo electrónico válido"
             type="email"
             v-model="email"

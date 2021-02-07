@@ -9,7 +9,9 @@
             <div class="card-body">
                 <p>Ingresa tus datos para iniciar sesión en la aplicación.</p>
 
-                <form :action="url" @submit.prevent="validForm">
+                <form :action="url">
+                    <input type="hidden" name="_token" value="">
+
                     <div class="row">
                         <div class="col-md-12">
                             <email-component></email-component>
@@ -27,9 +29,9 @@
                             <button class="btn btn-block btn-dark" :class="{
                                 'is-invalid':inValidFeedBackBtn,
                                 'is-valid':validFeedBackBtn
-                            }">Ingresar</button>
+                            }" type="button" @click="validForm">Ingresar</button>
 
-                            <div :class="{
+                            <div class="small" :class="{
                                 'invalid-feedback':inValidFeedBackBtn,
                                 'valid-feedback':validFeedBackBtn
                             }" v-html="feedbackBtn"></div>
@@ -44,30 +46,82 @@
 <script>
     export default {
         name: "Login",
+        data(){
+            return {
+                feedbackBtn: '&nbsp;',
+                inValidFeedBackBtn: false,
+                validFeedBackBtn: false
+            }
+        },
         props: {
-            feedbackBtn: {
-                type: String,
-                default: '&nbsp;'
-            },
-            inValidFeedBackBtn:{
-                type: Boolean,
-                default: false
-            },
             url: {
                 type: String,
                 default: '/login'
-            },
-            validFeedBackBtn: {
-                type: Boolean,
-                default: false
             }
         },
         mounted() {
+            document.querySelector("input[name='_token']").value = document.querySelector("meta[name=csrf-token]").getAttribute("content");
         },
         methods: {
             validForm(){
-                console.log('Submit atrapado');
+                let f = document.querySelector("form");
+                let b = Array.from(f.querySelectorAll('button'));
+                let inputs = Array.from(f.querySelectorAll('input'));
+                let url = f.getAttribute("action");
+                let valid = true;
+
+                inputs.forEach(i => {
+                    if( i.value.length == 0 ){
+                        this.feedbackBtn = "¡Favor de llenar todos los campos!"
+                        this.inValidFeedBackBtn = true
+                        this.validFeedBackBtn = false
+                        valid = false
+                        return false
+                    }
+                    else {
+                        if ( i.classList.contains('is-invalid') ){
+                            this.feedbackBtn = "¡Favor de cumplir con lo indicado en el campo en rojo!"
+                            this.inValidFeedBackBtn = true
+                            this.validFeedBackBtn = false
+                            valid = false
+                            return false
+                        }
+                    }
+                })
+
+                if( valid ){
+                    this.feedbackBtn = "Espera mientras se validan los datos"
+                    this.inValidFeedBackBtn = false
+                    this.validFeedBackBtn = false
+                    b[0].disabled = true
+
+                    let data = new FormData(f);
+
+                    axios.post(url, data)
+                        .then(response => {
+                            if( response.status == 200 ){
+                                this.feedbackBtn = "Datos correctos, espera unos segundos para ser redireccionado."
+                                this.inValidFeedBackBtn = false
+                                this.validFeedBackBtn = true
+                                setTimeout(function(){
+                                    window.location = "inicio"
+                                }, 2000)
+                            }
+                            else {
+                                console.log(response)
+                            }
+                        })
+                        .catch(error => {
+                            this.feedbackBtn = "Los datos no fueron encontrados, favor de verificar."
+                            this.inValidFeedBackBtn = true
+                            this.validFeedBackBtn = false
+                            b[0].disabled = false
+                            console.log(error)
+                        })
+                }
             }
+        },
+        computed: {
         }
     }
 </script>
