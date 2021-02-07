@@ -2044,14 +2044,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PasswordComponent",
   data: function data() {
     return {
       feedback: '&nbsp;',
       isInvalid: false,
-      isValid: false
+      isValid: false,
+      password: ''
     };
+  },
+  methods: {
+    validPassword: function validPassword() {
+      var v = this.password.trim();
+
+      if (v == null || v.length < 5 || v.length > 10 || /^\s+$/.test(v)) {
+        this.feedback = "¡Ingrese un texto de 5 a 10 caracteres!";
+        this.isInvalid = true;
+        this.isValid = false;
+      } else {
+        this.feedback = "Parece correcta";
+        this.isInvalid = false;
+        this.isValid = true;
+      }
+    }
   }
 });
 
@@ -38559,6 +38578,14 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.password,
+          expression: "password"
+        }
+      ],
       staticClass: "form-control",
       class: {
         "is-invalid": _vm.isInvalid,
@@ -38568,6 +38595,16 @@ var render = function() {
         id: "password",
         placeholder: "Ingrese su password",
         type: "password"
+      },
+      domProps: { value: _vm.password },
+      on: {
+        keyup: _vm.validPassword,
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.password = $event.target.value
+        }
       }
     }),
     _vm._v(" "),
