@@ -1979,14 +1979,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EmailComponent",
   data: function data() {
     return {
+      email: '',
       feedback: '&nbsp;',
       isInvalid: false,
       isValid: false
     };
+  },
+  methods: {
+    validEmail: function validEmail() {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (!re.test(this.email)) {
+        this.feedback = "¡Ingresa un correo electrónico válido!";
+        this.isInvalid = true;
+        this.isValid = false;
+      } else {
+        this.feedback = "Parece correcto";
+        this.isInvalid = false;
+        this.isValid = true;
+      }
+    }
   }
 });
 
@@ -38473,6 +38492,14 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.email,
+          expression: "email"
+        }
+      ],
       staticClass: "form-control",
       class: {
         "is-invalid": _vm.isInvalid,
@@ -38482,6 +38509,16 @@ var render = function() {
         id: "email",
         placeholder: "Ingrese un correo electrónico válido",
         type: "email"
+      },
+      domProps: { value: _vm.email },
+      on: {
+        keyup: _vm.validEmail,
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.email = $event.target.value
+        }
       }
     }),
     _vm._v(" "),

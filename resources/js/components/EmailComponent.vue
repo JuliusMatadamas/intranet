@@ -10,6 +10,9 @@
             id="email"
             placeholder="Ingrese un correo electrónico válido"
             type="email"
+            v-model="email"
+
+            @keyup="validEmail"
         >
 
         <div
@@ -27,9 +30,25 @@
         name: "EmailComponent",
         data(){
             return {
+                email: '',
                 feedback: '&nbsp;',
                 isInvalid: false,
                 isValid: false
+            }
+        },
+        methods: {
+            validEmail(){
+                let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if ( !re.test(this.email) ){
+                    this.feedback = "¡Ingresa un correo electrónico válido!"
+                    this.isInvalid = true
+                    this.isValid = false
+                }
+                else {
+                    this.feedback = "Parece correcto"
+                    this.isInvalid = false
+                    this.isValid = true
+                }
             }
         }
     }
