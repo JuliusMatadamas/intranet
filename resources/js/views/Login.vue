@@ -29,7 +29,7 @@
                             <button class="btn btn-block btn-dark" :class="{
                                 'is-invalid':inValidFeedBackBtn,
                                 'is-valid':validFeedBackBtn
-                            }" type="button" @click="validForm">Ingresar</button>
+                            }" type="button" @click="validForm(redirect)">Ingresar</button>
 
                             <div class="small" :class="{
                                 'invalid-feedback':inValidFeedBackBtn,
@@ -54,6 +54,10 @@
             }
         },
         props: {
+            redirect: {
+                type: String,
+                default: '/inicio'
+            },
             url: {
                 type: String,
                 default: '/login'
@@ -63,7 +67,7 @@
             document.querySelector("input[name='_token']").value = document.querySelector("meta[name=csrf-token]").getAttribute("content");
         },
         methods: {
-            validForm(){
+            validForm(r){
                 let f = document.querySelector("form");
                 let b = Array.from(f.querySelectorAll('button'));
                 let inputs = Array.from(f.querySelectorAll('input'));
@@ -104,7 +108,7 @@
                                 this.inValidFeedBackBtn = false
                                 this.validFeedBackBtn = true
                                 setTimeout(function(){
-                                    window.location = "inicio"
+                                    window.location.href = r
                                 }, 2000)
                             }
                             else {

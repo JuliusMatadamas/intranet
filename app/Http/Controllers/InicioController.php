@@ -21,8 +21,10 @@ class InicioController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Solo los usuarios con roles 'admin', y 'usuario' pueden acceder a la vista
+        $request->user()->authorizeRoles(['Admin']);
         return view('inicio');
     }
 }

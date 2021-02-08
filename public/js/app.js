@@ -2142,6 +2142,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   props: {
+    redirect: {
+      type: String,
+      "default": '/inicio'
+    },
     url: {
       type: String,
       "default": '/login'
@@ -2151,7 +2155,7 @@ __webpack_require__.r(__webpack_exports__);
     document.querySelector("input[name='_token']").value = document.querySelector("meta[name=csrf-token]").getAttribute("content");
   },
   methods: {
-    validForm: function validForm() {
+    validForm: function validForm(r) {
       var _this = this;
 
       var f = document.querySelector("form");
@@ -2189,7 +2193,7 @@ __webpack_require__.r(__webpack_exports__);
             _this.inValidFeedBackBtn = false;
             _this.validFeedBackBtn = true;
             setTimeout(function () {
-              window.location = "inicio";
+              window.location.href = r;
             }, 2000);
           } else {
             console.log(response);
@@ -38728,7 +38732,11 @@ var render = function() {
                     "is-valid": _vm.validFeedBackBtn
                   },
                   attrs: { type: "button" },
-                  on: { click: _vm.validForm }
+                  on: {
+                    click: function($event) {
+                      return _vm.validForm(_vm.redirect)
+                    }
+                  }
                 },
                 [_vm._v("Ingresar")]
               ),
@@ -51295,8 +51303,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\intranet\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\intranet\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\aplicaciones\xampp\htdocs\intranet\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\aplicaciones\xampp\htdocs\intranet\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
