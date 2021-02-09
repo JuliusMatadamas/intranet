@@ -32,4 +32,12 @@ Vue.component('password-component', require('./components/PasswordComponent').de
 
 const app = new Vue({
     el: '#app',
+    methods: {
+    	showHideNav(){
+    		let s = document.querySelector("#sidebar");
+    		let c = document.querySelector("#content");
+    		s.classList.toggle('active');
+    		c.classList.toggle('active');
+    	}
+    }
 });

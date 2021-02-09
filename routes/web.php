@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/inicio', 'InicioController@index')->name('inicio');
+
+Route::middleware(['auth'])->group(function(){
+	// Planes
+	Route::get('/rh/planes', 'RhPlanesController@index')->name('rh.planes');
+});

@@ -132,8 +132,8 @@
 
 <style scoped>
     .card {
-        animation: zoomIn;
-        animation-duration: 2s;
+        animation: fadeIn;
+        animation-duration: 3s;
     }
     .fhw {
         align-items: center;

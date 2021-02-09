@@ -6705,7 +6705,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card[data-v-12f5395a] {\n    -webkit-animation: zoomIn;\n            animation: zoomIn;\n    -webkit-animation-duration: 2s;\n            animation-duration: 2s;\n}\n.fhw[data-v-12f5395a] {\n    align-items: center;\n    display: flex;\n    height: 100vh;\n    justify-content: center;\n    width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.card[data-v-12f5395a] {\n    -webkit-animation: fadeIn;\n            animation: fadeIn;\n    -webkit-animation-duration: 3s;\n            animation-duration: 3s;\n}\n.fhw[data-v-12f5395a] {\n    align-items: center;\n    display: flex;\n    height: 100vh;\n    justify-content: center;\n    width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -50974,7 +50974,15 @@ Vue.component('password-component', __webpack_require__(/*! ./components/Passwor
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  methods: {
+    showHideNav: function showHideNav() {
+      var s = document.querySelector("#sidebar");
+      var c = document.querySelector("#content");
+      s.classList.toggle('active');
+      c.classList.toggle('active');
+    }
+  }
 });
 
 /***/ }),
