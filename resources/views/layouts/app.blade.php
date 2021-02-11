@@ -18,7 +18,12 @@
         @guest
             @yield('content')
         @else
-            @yield('content')
+            @include('layouts.navbar')
+            <div class="page-content p-5" id="content">
+                @include('layouts.toggle')
+
+                @yield('content')
+            </div>
         @endguest
     </div>
 

@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
+/*!
  * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
@@ -10996,6 +10996,26 @@ body {
 #content.active {
   margin: 0;
   width: 100%;
+}
+
+#nav-header {
+  height: 100px;
+}
+
+#nav-body {
+  height: calc(100vh - 100px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#nav-body::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+}
+
+#nav-body::-webkit-scrollbar-thumb {
+  background: #f5f5f5;
+  border-radius: 4px;
 }
 
 .nav-link {

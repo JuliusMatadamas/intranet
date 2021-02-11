@@ -36,49 +36,49 @@ class AuthServiceProvider extends ServiceProvider
                  * ingresar por medio del menú de navegación
                  * @var array
                  */
-                // $permisos = array();
+                $permisos = array();
 
                 /**
                  * Primero se hace consulta para obtener
                  * los menús autorizados al usuario
                  */
-                /**$menusAutorizados = DB::table('permisos')
+                $menusAutorizados = DB::table('permisos')
                     ->join('submenus', 'permisos.submenu_id', '=', 'submenus.id')
                     ->join('menus', 'submenus.menu_id', '=', 'menus.id')
                     ->select('menus.id','menus.menu', 'menus.href')
                     ->distinct()
-                    ->where('permisos.user_id', '=', Auth::user()->id)
+                    ->where('permisos.usuario_id', '=', Auth::user()->id)
                     ->whereNull('permisos.deleted_at')
-                    ->get();*/
+                    ->get();
 
                 /**
-                 * Para poser recorrer los menus autorizados
+                 * Para poder recorrer los menus autorizados
                  * se pasa a array a la variable
                  */
-                // $arrayMenus = json_decode($menusAutorizados, true);
+                $arrayMenus = json_decode($menusAutorizados, true);
 
                 /**
                  * Se vuelve a hacer otra consulta
                  * para obtener los submenus autorizados
                  * al usuario
                  */
-                /**$submenusAutorizados = DB::table('permisos')
+                $submenusAutorizados = DB::table('permisos')
                     ->join('submenus', 'permisos.submenu_id', '=', 'submenus.id')
                     ->select('submenus.submenu', 'submenus.href', 'submenus.menu_id')
-                    ->where('permisos.user_id', '=', Auth::user()->id)
+                    ->where('permisos.usuario_id', '=', Auth::user()->id)
                     ->whereNull('permisos.deleted_at')
-                    ->get();*/
+                    ->get();
 
                 /**
                  * Se pasa a array para recorrer los resultados
                  */
-                // $arraySubmenus = json_decode($submenusAutorizados, true);
+                $arraySubmenus = json_decode($submenusAutorizados, true);
 
                 /**
                  * Se recorren los menús
                  * autorizados al usuario
                  */
-                /**foreach ($arrayMenus as $m) {
+                foreach ($arrayMenus as $m) {
                     $menu = array();
                     $submenu = array();
                     $submenus = array();
@@ -92,7 +92,7 @@ class AuthServiceProvider extends ServiceProvider
                      * autorizado, se agrega a la
                      * lista de submenus
                      */
-                    /**foreach ($arraySubmenus as $s) {
+                    foreach ($arraySubmenus as $s) {
                         if( $s['menu_id'] == $m['id'] ){
                             $submenu['submenu'] = $s['submenu'];
                             $submenu['ruta'] = $s['href'];
@@ -107,10 +107,10 @@ class AuthServiceProvider extends ServiceProvider
 
                     // Se agrega a los permisos del usuario
                     array_push($permisos, $menu);
-                }*/
+                }
 
-                // $view->with(['currentUser' => Auth::user()->empleado->nombre, 'permisos' => $permisos]);
-                $view->with(['usuario' => Auth::user()->empleado->nombre]);
+                $view->with(['usuario' => Auth::user()->empleado->nombre, 'permisos' => $permisos]);
+                // $view->with(['usuario' => Auth::user()->empleado->nombre]);
             }
         });
     }
