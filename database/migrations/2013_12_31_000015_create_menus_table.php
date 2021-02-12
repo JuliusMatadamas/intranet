@@ -17,6 +17,8 @@ class CreateMenusTable extends Migration
             $table->id();
             $table->string('menu', 50);
             $table->string('href', 50);
+            $table->string('id_submenu', 50)->nullable();
+            $table->string('icon', 50)->nullable();
             $table->softDeletes('deleted_at');
             $table->timestamps();
         });

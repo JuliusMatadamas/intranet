@@ -88,6 +88,10 @@ html, body {
 	color: #000000;
 	text-decoration: none;
 }
+.btn-close {
+  border: none;
+  border-radius: 20px;
+}
 
 @media (max-width: 768px) {
 	#sidebar {

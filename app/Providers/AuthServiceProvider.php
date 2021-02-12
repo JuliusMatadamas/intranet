@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Puesto;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,11 @@ class AuthServiceProvider extends ServiceProvider
         view()->composer('*', function($view){
             if ( Auth::check() ) {
                 /**
+                 * Info del usuario autenticado
+                 */
+                $contrato = json_decode(Auth::user()->empleado->contratos, true);
+                $puesto = Puesto::find($contrato[0]["puesto_id"]);
+                /**
                  * [$permisos description]
                  * Variable que almacenará las rutas
                  * a las que el usuario tendrá permitido
@@ -45,7 +51,7 @@ class AuthServiceProvider extends ServiceProvider
                 $menusAutorizados = DB::table('permisos')
                     ->join('submenus', 'permisos.submenu_id', '=', 'submenus.id')
                     ->join('menus', 'submenus.menu_id', '=', 'menus.id')
-                    ->select('menus.id','menus.menu', 'menus.href')
+                    ->select('menus.id','menus.menu', 'menus.href', 'menus.id_submenu', 'icon')
                     ->distinct()
                     ->where('permisos.usuario_id', '=', Auth::user()->id)
                     ->whereNull('permisos.deleted_at')
@@ -103,13 +109,19 @@ class AuthServiceProvider extends ServiceProvider
 
                     $menu['menu'] = $m['menu'];
                     $menu['ruta'] = $m['href'];
+                    $menu['id_submenu'] = $m['id_submenu'];
+                    $menu['icon'] = $m['icon'];
                     $menu['submenus'] = $submenus;
 
                     // Se agrega a los permisos del usuario
                     array_push($permisos, $menu);
                 }
 
-                $view->with(['usuario' => Auth::user()->empleado->nombre, 'permisos' => $permisos]);
+                $view->with([
+                    'usuario' => Auth::user()->empleado->nombre,
+                    'puesto' => $puesto,
+                    'permisos' => $permisos]
+                );
                 // $view->with(['usuario' => Auth::user()->empleado->nombre]);
             }
         });

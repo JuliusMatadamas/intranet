@@ -24,4 +24,13 @@ Route::get('/inicio', 'InicioController@index')->name('inicio');
 Route::middleware(['auth'])->group(function(){
 	// Planes
 	Route::get('/rh/planes', 'RhPlanesController@index')->name('rh.planes');
+	Route::get('/rh/planes/crear', 'RhPlanesController@create')->name('rh.planes.create');
+
+	// Planes
+	Route::get('/rh/empleados', 'RhEmpleadosController@index')->name('rh.empleados');
+	Route::get('/rh/empleados/alta', 'RhEmpleadosController@create')->name('rh.empleados.create');
+
+	// Vacantes
+	Route::get('/rh/vacantes', 'RhVacantesController@index')->name('rh.vacantes');
+	Route::get('/rh/vacantes/crear', 'RhVacantesController@create')->name('rh.vacantes.create');
 });

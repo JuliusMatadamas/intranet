@@ -1,12 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="{{ route('logout')  }}" method="post">
-        @csrf
-        <div class="row">
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-dark">Log-out</button>
-            </div>
-        </div>
-    </form>
+
+<div class="card">
+	<div class="card-header">
+		<h2>Inicio</h2>
+	</div>
+
+	<div class="card-body">
+		<p>Selecciona la opción requerida del menú.</p>
+	</div>
+
+	<div class="card-footer text-center">
+		<small class="text-dark">GRUPO PROMOCIONES S.A. DE C.V. ® 2014 Todos los derechos reservados.</small>
+	</div>
+</div>
+
 @endsection

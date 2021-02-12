@@ -19,11 +19,13 @@
             @yield('content')
         @else
             @include('layouts.navbar')
-            <div class="page-content p-5" id="content">
-                @include('layouts.toggle')
+            <div class="page-content p-4" id="content">
+                <h1>Intranet</h1>
+                @include('layouts.buttons')
 
                 @yield('content')
             </div>
+            @include('layouts.modal')
         @endguest
     </div>
 
