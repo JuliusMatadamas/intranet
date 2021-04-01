@@ -11065,3 +11065,27 @@ body {
   }
 }
 
+.users {
+  padding: 25px 30px;
+  min-width: 450px;
+}
+
+.users header {
+  align-items: center;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  justify-content: space-between;
+}
+
+.users header .content {
+  display: flex;
+}
+
+.users header .logout {
+  background-color: #333;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  padding: 7px 15px;
+}
+
