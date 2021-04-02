@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Empresa;
 
-class RhPlanesController extends Controller
+class EmpresaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,7 @@ class RhPlanesController extends Controller
      */
     public function index()
     {
-        return view('rh.planes.index');
+        return Empresa::all();
     }
 
     /**
@@ -23,7 +25,7 @@ class RhPlanesController extends Controller
      */
     public function create()
     {
-        return view('rh.planes.nuevo');
+        //
     }
 
     /**

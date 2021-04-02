@@ -2,7 +2,7 @@
 <div class="vertical-nav bg-white" id="sidebar">
 	<div id="nav-header" class="py-2 px-3 mb-2 bg-light">
 		<div class="media d-flex align-items-center">
-			<img loading="lazy" src="img/profile.png" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+			<img loading="lazy" src="{{ asset('img/profile.png') }}" alt="..." width="80" height="80" class="mr-3 rounded-circle img-thumbnail shadow-sm">
 			<div class="media-body">
 				<h4 class="m-0">{{ $usuario }}</h4>
 				<p class="font-weight-normal text-muted mb-0">{{ $puesto->puesto }}</p>

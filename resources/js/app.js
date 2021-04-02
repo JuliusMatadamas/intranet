@@ -7,6 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,6 +25,7 @@ window.Vue = require('vue');
 Vue.component('login-view', require('./views/Login.vue').default);
 Vue.component('email-component', require('./components/EmailComponent').default);
 Vue.component('password-component', require('./components/PasswordComponent').default);
+Vue.component('empresa-component', require('./components/EmpresaComponent').default);
 
 
 /**
@@ -30,8 +34,17 @@ Vue.component('password-component', require('./components/PasswordComponent').de
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const store = new Vuex.Store({
+	state: {
+		empresas: []
+	},
+	mutations: {
+	}
+})
+
 const app = new Vue({
     el: '#app',
+    store,
     methods: {
     	showHideNav(){
     		let s = document.querySelector("#sidebar");

@@ -23,14 +23,18 @@
                 <h1 class="text-center">Intranet</h1>
                 <nav class="navbar navbar-expand-md navbar-light bg-transparent">
                     <div class="container">
-                        <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4" @click="showHideNav()">
+                        <!-- Toggle button -->
+                        <button id="sidebarCollapse" type="button" class="btn btn-light bg-white shadow-sm px-4" @click="showHideNav()">
                             <i class="fa fa-bars mr-2"></i>
                             <small class="text-uppercase font-weight-bold">Toggle</small>
                         </button>
+
+                        <!-- Navbar-toggler -->
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
+                        <!-- User-info -->
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item dropdown">
