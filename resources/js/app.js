@@ -38,8 +38,32 @@ const store = new Vuex.Store({
 	state: {
 		empresas: []
 	},
+    getters: {
+        empresas: state => state.empresas
+    },
 	mutations: {
-	}
+	},
+    actions: {
+        GET_EMPRESAS({commit}){
+            let uri = location.protocol + '//' + location.hostname + ':' + location.port + '/api/empresas';
+            axios.get(uri)
+                .then(function(response){
+                    commit('SET_EMPRESAS', response.data)
+                })
+                .catch(function(error){
+                    console.log( error )
+                    commit('RESET_EMPRESAS')
+                })
+        }
+    },
+    mutations: {
+        RESET_EMPRESAS(state){
+            state.empresas = []
+        },
+        SET_EMPRESAS(state, empresas){
+            state.empresas = empresas
+        }
+    }
 })
 
 const app = new Vue({

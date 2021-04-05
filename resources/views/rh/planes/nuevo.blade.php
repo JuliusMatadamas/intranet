@@ -13,7 +13,7 @@
 
 		<div class="row">
 			<!-- Selección de la empresa -->
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<empresa-component></empresa-component>
 			</div>
 

@@ -2021,6 +2021,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2029,12 +2036,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EmpresaComponent",
   data: function data() {
-    return {};
+    return {
+      empresa_id: 0
+    };
   },
-  methods: {}
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['GET_EMPRESAS'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['empresas'])),
+  mounted: function mounted() {
+    this.GET_EMPRESAS();
+  }
 });
 
 /***/ }),
@@ -38704,25 +38721,54 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "fwc" }, [
-      _c("label", { staticClass: "form-label", attrs: { for: "empresa_id" } }, [
-        _vm._v("Seleccione la empresa")
-      ]),
-      _vm._v(" "),
-      _c("select", {
+  return _c("div", { staticClass: "fwc" }, [
+    _c("label", { staticClass: "form-label", attrs: { for: "empresa_id" } }, [
+      _vm._v("Seleccione la empresa")
+    ]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.empresa_id,
+            expression: "empresa_id"
+          }
+        ],
         staticClass: "form-control",
-        attrs: { name: "empresa_id", id: "empresa_id" }
-      })
-    ])
-  }
-]
+        attrs: { name: "empresa_id", id: "empresa_id" },
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.empresa_id = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "0" } }, [_vm._v("Seleccione...")]),
+        _vm._v(" "),
+        _vm._l(_vm.empresas, function(empresa) {
+          return _c("option", { domProps: { value: empresa.id } }, [
+            _vm._v(_vm._s(empresa.nombre_corto))
+          ])
+        })
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -52330,6 +52376,8 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -52360,12 +52408,36 @@ Vue.component('empresa-component', __webpack_require__(/*! ./components/EmpresaC
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
+var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store(_defineProperty({
   state: {
     empresas: []
   },
-  mutations: {}
-});
+  getters: {
+    empresas: function empresas(state) {
+      return state.empresas;
+    }
+  },
+  mutations: {},
+  actions: {
+    GET_EMPRESAS: function GET_EMPRESAS(_ref) {
+      var commit = _ref.commit;
+      var uri = location.protocol + '//' + location.hostname + ':' + location.port + '/api/empresas';
+      axios.get(uri).then(function (response) {
+        commit('SET_EMPRESAS', response.data);
+      })["catch"](function (error) {
+        console.log(error);
+        commit('RESET_EMPRESAS');
+      });
+    }
+  }
+}, "mutations", {
+  RESET_EMPRESAS: function RESET_EMPRESAS(state) {
+    state.empresas = [];
+  },
+  SET_EMPRESAS: function SET_EMPRESAS(state, empresas) {
+    state.empresas = empresas;
+  }
+}));
 var app = new Vue({
   el: '#app',
   store: store,
