@@ -1,7 +1,7 @@
 <template>
     <div class="fwc">
         <label for="empresa_id" class="form-label">Seleccione la empresa</label>
-        <select v-model="empresa_id" name="empresa_id" id="empresa_id" class="form-control">
+        <select v-model="empresa_id" name="empresa_id" id="empresa_id" class="form-control" @change="addClientes">
             <option value="0">Seleccione...</option>
             <option v-for="empresa in empresas" :value="empresa.id">{{ empresa.nombre_corto }}</option>
         </select>
@@ -22,7 +22,13 @@
         methods: {
             ...mapActions([
                 'GET_EMPRESAS'
-            ])
+            ]),
+            ...mapActions({
+                getClientes: 'GET_CLIENTES'
+            }),
+            addClientes(){
+                this.getClientes(this.empresa_id);
+            }
         },
         computed: {
             ...mapGetters([

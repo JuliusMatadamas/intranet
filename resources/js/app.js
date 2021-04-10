@@ -26,6 +26,7 @@ Vue.component('login-view', require('./views/Login.vue').default);
 Vue.component('email-component', require('./components/EmailComponent').default);
 Vue.component('password-component', require('./components/PasswordComponent').default);
 Vue.component('empresa-component', require('./components/EmpresaComponent').default);
+Vue.component('cliente-component', require('./components/ClienteComponent').default);
 
 
 /**
@@ -36,13 +37,13 @@ Vue.component('empresa-component', require('./components/EmpresaComponent').defa
 
 const store = new Vuex.Store({
 	state: {
-		empresas: []
+		empresas: [],
+        clientes: []
 	},
     getters: {
-        empresas: state => state.empresas
+        empresas: state => state.empresas,
+        clientes: state => state.clientes
     },
-	mutations: {
-	},
     actions: {
         GET_EMPRESAS({commit}){
             let uri = location.protocol + '//' + location.hostname + ':' + location.port + '/api/empresas';
@@ -54,6 +55,17 @@ const store = new Vuex.Store({
                     console.log( error )
                     commit('RESET_EMPRESAS')
                 })
+        },
+        GET_CLIENTES({commit}, id){
+            let uri = location.protocol + '//' + location.hostname + ':' + location.port + '/api/clientes/' + id;
+            axios.get(uri)
+                .then(function(response){
+                    commit('SET_CLIENTES', response.data)
+                })
+                .catch(function(error){
+                    console.log( error )
+                    commit('RESET_CLIENTES')
+                })
         }
     },
     mutations: {
@@ -62,6 +74,12 @@ const store = new Vuex.Store({
         },
         SET_EMPRESAS(state, empresas){
             state.empresas = empresas
+        },
+        RESET_CLIENTES(state){
+            state.clientes = []
+        },
+        SET_CLIENTES(state, clientes){
+            state.clientes = clientes
         }
     }
 })

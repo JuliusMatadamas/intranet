@@ -13,14 +13,17 @@
 
 		<div class="row">
 			<!-- Selección de la empresa -->
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<empresa-component></empresa-component>
 			</div>
 
 			<!-- Selección del cliente -->
-			<div class="col-md-6">
+			<div class="col-md-7">
+                <cliente-component></cliente-component>
 			</div>
 		</div>
+
+        <br>
 
 		<div class="row">
 			<!-- Nombre del plan -->
