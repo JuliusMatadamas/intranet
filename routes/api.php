@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('empresas', 'Api\EmpresaController@index');
 Route::get('clientes', 'Api\ClienteController@index');
 Route::get('clientes/{empresa}', 'Api\ClienteController@show');
+Route::get('planes', 'Api\PlanesController@index');
+Route::get('planes/{plan}', 'Api\PlanesController@show');

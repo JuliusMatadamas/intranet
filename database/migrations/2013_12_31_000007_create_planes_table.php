@@ -20,6 +20,7 @@ class CreatePlanesTable extends Migration
             $table->string('nombre', 255)->unique();
             $table->date('inicia')->nullable();
             $table->date('termina')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->unique(['empresa_id', 'cliente_id', 'nombre'], 'unique_plan');

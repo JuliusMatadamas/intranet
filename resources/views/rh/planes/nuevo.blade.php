@@ -27,9 +27,8 @@
 
 		<div class="row">
 			<!-- Nombre del plan -->
-			<div class="col-md-8">
-				<label for="nombre">Ingrese el nombre del plan</label>
-				<input type="text">
+			<div class="col-md-5">
+                <nombre-plan></nombre-plan>
 			</div>
 		</div>
 

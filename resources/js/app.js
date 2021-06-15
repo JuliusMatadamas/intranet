@@ -27,6 +27,7 @@ Vue.component('email-component', require('./components/EmailComponent').default)
 Vue.component('password-component', require('./components/PasswordComponent').default);
 Vue.component('empresa-component', require('./components/EmpresaComponent').default);
 Vue.component('cliente-component', require('./components/ClienteComponent').default);
+Vue.component('nombre-plan', require('./components/NombrePlanComponent').default);
 
 
 /**
