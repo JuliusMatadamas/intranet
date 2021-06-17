@@ -32,19 +32,42 @@
 			</div>
 		</div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Duración del plan:</h5>
+            </div>
+        </div>
+
 		<div class="row">
 			<!-- Fecha de inicio -->
 			<div class="col-md-4">
-				<label for="inicia">Ingrese la fecha de inicio</label>
-				<input type="text">
+				<label for="inicia">De la fecha</label>
+                <date-picker id="fechaInicio" name="fechaInicio"></date-picker>
 			</div>
 
 			<!-- Fecha de término -->
 			<div class="col-md-4">
-				<label for="termina">Ingrese la fecha de cierre</label>
-				<input type="text">
+				<label for="termina">A la fecha</label>
+                <date-picker id="fechaTermino" name="fechaTermino"></date-picker>
 			</div>
+
+            <!-- Fecha de término indeterminada -->
+            <div class="col-md-4">
+                <label for="indeterminada">Sin fecha de término</label>
+                <div class="text-center">
+                    <input class="form-check-input" type="checkbox" id="" value="">
+                </div>
+
+            </div>
 		</div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-block btn-dark" @click="validarPlan()">Guardar</button>
+            </div>
+        </div>
 	</div>
 
 	<div class="card-footer bg-white text-center">

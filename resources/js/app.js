@@ -9,7 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,6 +28,7 @@ Vue.component('password-component', require('./components/PasswordComponent').de
 Vue.component('empresa-component', require('./components/EmpresaComponent').default);
 Vue.component('cliente-component', require('./components/ClienteComponent').default);
 Vue.component('nombre-plan', require('./components/NombrePlanComponent').default);
+Vue.component('date-picker', require('./components/DatePickerComponent').default);
 
 
 /**
@@ -94,6 +95,12 @@ const app = new Vue({
     		let c = document.querySelector("#content");
     		s.classList.toggle('active');
     		c.classList.toggle('active');
-    	}
+    	},
+        validarPlan(){
+    	    let dp = document.querySelectorAll('[id^="datepicker_"]');
+    	    dp.forEach(function(p){
+    	        console.log(p.value)
+            })
+        }
     }
 });
