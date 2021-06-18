@@ -42,20 +42,20 @@
 			<!-- Fecha de inicio -->
 			<div class="col-md-4">
 				<label for="inicia">De la fecha</label>
-                <date-picker id="fechaInicio" name="fechaInicio"></date-picker>
+                <fecha-inicio></fecha-inicio>
 			</div>
 
 			<!-- Fecha de término -->
 			<div class="col-md-4">
 				<label for="termina">A la fecha</label>
-                <date-picker id="fechaTermino" name="fechaTermino"></date-picker>
+                <fecha-termino></fecha-termino>
 			</div>
 
             <!-- Fecha de término indeterminada -->
             <div class="col-md-4">
                 <label for="indeterminada">Sin fecha de término</label>
                 <div class="text-center">
-                    <input class="form-check-input" type="checkbox" id="" value="">
+                    <input class="form-check-input" type="checkbox" id="sinFechaTermino" @click="bloquearFechaTermino()">
                 </div>
 
             </div>

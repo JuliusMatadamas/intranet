@@ -28,7 +28,8 @@ Vue.component('password-component', require('./components/PasswordComponent').de
 Vue.component('empresa-component', require('./components/EmpresaComponent').default);
 Vue.component('cliente-component', require('./components/ClienteComponent').default);
 Vue.component('nombre-plan', require('./components/NombrePlanComponent').default);
-Vue.component('date-picker', require('./components/DatePickerComponent').default);
+Vue.component('fecha-inicio', require('./components/FechaInicioComponent').default);
+Vue.component('fecha-termino', require('./components/FechaTerminoComponent').default);
 
 
 /**
@@ -40,11 +41,17 @@ Vue.component('date-picker', require('./components/DatePickerComponent').default
 const store = new Vuex.Store({
 	state: {
 		empresas: [],
-        clientes: []
+        clientes: [],
+        fechaInicio: new Date(),
+        fechaTermino: new Date(),
+        disabledFechaTermino: false
 	},
     getters: {
         empresas: state => state.empresas,
-        clientes: state => state.clientes
+        clientes: state => state.clientes,
+        fechaInicio: state => state.fechaInicio,
+        fechaTermino: state => state.fechaTermino,
+        disabledFechaTermino: state => state.disabledFechaTermino,
     },
     actions: {
         GET_EMPRESAS({commit}){
@@ -68,6 +75,12 @@ const store = new Vuex.Store({
                     console.log( error )
                     commit('RESET_CLIENTES')
                 })
+        },
+        GET_FECHA_INICIO({commit}, d){
+            commit('SET_FECHA_INICIO', d)
+        },
+        GET_FECHA_TERMINO({commit}, d){
+            commit('SET_FECHA_TERMINO', d)
         }
     },
     mutations: {
@@ -82,6 +95,12 @@ const store = new Vuex.Store({
         },
         SET_CLIENTES(state, clientes){
             state.clientes = clientes
+        },
+        SET_FECHA_INICIO(state, d){
+            state.fechaInicio = d
+        },
+        SET_FECHA_TERMINO(state, d){
+            state.fechaTermino = d
         }
     }
 })
@@ -96,11 +115,9 @@ const app = new Vue({
     		s.classList.toggle('active');
     		c.classList.toggle('active');
     	},
-        validarPlan(){
-    	    let dp = document.querySelectorAll('[id^="datepicker_"]');
-    	    dp.forEach(function(p){
-    	        console.log(p.value)
-            })
+        bloquearFechaTermino(){
+    	    this.$store.state.disabledFechaTermino = !this.$store.state.disabledFechaTermino;
         }
+
     }
 });
