@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Plan;
 use Illuminate\Http\Request;
+use App\Http\Requests\ValidarPlanRequest;
 
 class RhPlanesController extends Controller
 {
@@ -32,9 +34,12 @@ class RhPlanesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidarPlanRequest $request)
     {
-        //
+        Plan::create($request->validated());
+
+        $resp = "El plan se ha creado con éxito.";
+        return response()->json(['success' => true, 'resp' => $resp], 200);
     }
 
     /**

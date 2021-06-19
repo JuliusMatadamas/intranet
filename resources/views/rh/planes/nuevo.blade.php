@@ -57,7 +57,6 @@
                 <div class="text-center">
                     <input class="form-check-input" type="checkbox" id="sinFechaTermino" @click="bloquearFechaTermino()">
                 </div>
-
             </div>
 		</div>
 
@@ -65,7 +64,9 @@
 
         <div class="row">
             <div class="col-md-4">
-                <button class="btn btn-block btn-dark" @click="validarPlan()">Guardar</button>
+                <button id="btn-submit" class="btn btn-block btn-dark" @click="validarPlan()">Guardar</button>
+                <br>
+                <div id="msj">&nbsp;</div>
             </div>
         </div>
 	</div>

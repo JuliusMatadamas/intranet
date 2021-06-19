@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function(){
 	// Planes
 	Route::get('/rh/planes', 'RhPlanesController@index')->name('rh.planes');
 	Route::get('/rh/planes/crear', 'RhPlanesController@create')->name('rh.planes.create');
+    Route::post('/rh/planes', 'RhPlanesController@store')->name('rh.planes.store');
 
 	// Planes
 	Route::get('/rh/empleados', 'RhEmpleadosController@index')->name('rh.empleados');

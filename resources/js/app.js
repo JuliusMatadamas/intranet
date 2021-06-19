@@ -7,7 +7,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import Vuex from 'vuex'
+import Vuex from 'vuex';
+import moment from 'moment';
 
 Vue.use(Vuex);
 
@@ -117,7 +118,109 @@ const app = new Vue({
     	},
         bloquearFechaTermino(){
     	    this.$store.state.disabledFechaTermino = !this.$store.state.disabledFechaTermino;
+        },
+        validarPlan(){
+    	    let empresaId = document.querySelector("#empresa_id");
+    	    let clienteId = document.querySelector("#cliente_id");
+    	    let nombrePlan = document.querySelector("#nombre_plan");
+    	    let fi = this.$store.state.fechaInicio;
+    	    let ft = this.$store.state.fechaTermino;
+    	    let cb = document.querySelector("#sinFechaTermino");
+    	    let btn = document.querySelector("#btn-submit");
+    	    let msj = document.querySelector("#msj");
+            let uri = location.protocol + '//' + location.hostname + ':' + location.port + '/rh/planes';
+    	    if(empresaId.value == 0){
+    	        btn.classList.add('is-invalid');
+    	        msj.classList.add('invalid-feedback');
+    	        msj.innerHTML = "Seleccione la empresa";
+            }
+    	    else
+            {
+                if(clienteId.value == 0 || clienteId.value == '')
+                {
+                    btn.classList.add('is-invalid');
+                    msj.classList.add('invalid-feedback');
+                    msj.innerHTML = "Seleccione el cliente";
+                }
+                else
+                {
+                    if(nombrePlan.value < 5)
+                    {
+                        btn.classList.add('is-invalid');
+                        msj.classList.add('invalid-feedback');
+                        msj.innerHTML = "El nombre del plan debe tener mínimo 5 caracteres.";
+                    }
+                    else
+                    {
+                        if(nombrePlan.classList.contains('is-invalid'))
+                        {
+                            btn.classList.add('is-invalid');
+                            msj.classList.add('invalid-feedback');
+                            msj.innerHTML = "Atienda al mensaje del nombre del plan.";
+                        }
+                        else
+                        {
+                            let f1 = moment(fi).format("YYYY-MM-DD");
+                            let f2 = moment(ft).format("YYYY-MM-DD");
+                            if(!cb.checked)
+                            {
+                                if(f2 < f1)
+                                {
+                                    btn.classList.add('is-invalid');
+                                    msj.classList.add('invalid-feedback');
+                                    msj.innerHTML = "La fecha de término del plan no puede ser anterior a la fecha de inicio.";
+                                }
+                                else
+                                {
+                                    btn.classList.add('is-valid');
+                                    msj.classList.add('valid-feedback');
+                                    msj.innerHTML = "Espere mientras se guardan los datos.";
+                                    axios.post(uri, {
+                                        empresa_id: empresaId.value,
+                                        cliente_id: clienteId.value,
+                                        nombre: nombrePlan.value,
+                                        inicia: f1,
+                                        termina: f2
+                                    })
+                                        .then(function (response) {
+                                            btn.classList.add('is-valid');
+                                            msj.classList.add('valid-feedback');
+                                            msj.innerHTML = "El plan se guardó con éxito.";
+                                        })
+                                        .catch(function (error) {
+                                            btn.classList.add('is-invalid');
+                                            msj.classList.add('invalid-feedback');
+                                            msj.innerHTML = "No se pudo guardar el plan.";
+                                        });
+                                }
+                            }
+                            else
+                            {
+                                btn.classList.add('is-valid');
+                                msj.classList.add('valid-feedback');
+                                msj.innerHTML = "Espere mientras se guardan los datos.";
+                                axios.post(uri, {
+                                    empresa_id: empresaId.value,
+                                    cliente_id: clienteId.value,
+                                    nombre: nombrePlan.value,
+                                    inicia: f1,
+                                    termina: null
+                                })
+                                    .then(function (response) {
+                                        btn.classList.add('is-valid');
+                                        msj.classList.add('valid-feedback');
+                                        msj.innerHTML = "El plan se guardó con éxito.";
+                                    })
+                                    .catch(function (error) {
+                                        btn.classList.add('is-invalid');
+                                        msj.classList.add('invalid-feedback');
+                                        msj.innerHTML = "No se pudo guardar el plan.";
+                                    });
+                            }
+                        }
+                    }
+                }
+            }
         }
-
     }
 });

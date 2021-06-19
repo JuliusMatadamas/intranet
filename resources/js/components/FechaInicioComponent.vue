@@ -28,7 +28,6 @@
             }),
             setFechaInicio(){
                 this.getFechaInicio(this.date);
-                console.log(this.fechaInicio);
             }
         }
     }
